@@ -96,8 +96,8 @@
   <div class="page" id="page-root">
     <div class="viewer-wrap" id="viewer-wrap">
       <model-viewer id="mv"
-        src="/assets/model.glb"
-        ios-src="/assets/model.usdz"
+        src="/assets/model2.glb"
+        ios-src="/assets/model2.usdz"
         alt="AR Egg Phase"
         ar
         ar-modes="webxr scene-viewer quick-look"
