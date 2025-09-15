@@ -144,7 +144,7 @@
     async function tryPlayAllAnimations(){
       try{
         const loader = new GLTFLoader();
-        const gltf = await new Promise((res,rej)=> loader.load('/assets/model.glb', res, undefined, rej));
+        const gltf = await new Promise((res,rej)=> loader.load('/assets/model2.glb', res, undefined, rej));
         if(!gltf.animations || gltf.animations.length===0) return;
         const internalModel = mv.scene;
         if(!internalModel) return;
