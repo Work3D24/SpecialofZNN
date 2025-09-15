@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>AR Egg Phase</title>
+  <title>ZeeNuNewBaby</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     :root{
@@ -182,8 +182,8 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model2.glb"
-        ios-src="/assets/model2.usdz"
+        src="/assets/model1.glb"
+        ios-src="/assets/model1.usdz"
         alt="AR Egg Phase"
         ar
         ar-modes="webxr scene-viewer quick-look"
@@ -200,7 +200,7 @@
     <div class="egg-day-wrap">
       <div class="glass">
         <img class="evo" src="/assets/imageevo01.png" alt="Evolution">
-        <span class="label">Egg Day : 01</span>
+        <span class="label">EGG DAY : 01</span>
         <span class="noise"></span>
       </div>
     </div>
@@ -238,7 +238,7 @@
     async function tryPlayAllAnimations(){
       try{
         const loader = new GLTFLoader();
-        const gltf = await new Promise((res,rej)=> loader.load('/assets/model2.glb', res, undefined, rej));
+        const gltf = await new Promise((res,rej)=> loader.load('/assets/model1.glb', res, undefined, rej));
         if(!gltf.animations || gltf.animations.length===0) return;
         const internalModel = mv.scene;
         if(!internalModel) return;
