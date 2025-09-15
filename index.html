@@ -47,21 +47,28 @@
       background:transparent;
     }
 
+    /* กลุ่ม Egg Day + โลโก้ล่าง */
+    .bottom-group{
+      height:15vh; /* ทั้งกลุ่มสูงไม่เกิน 15% ของจอ */
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:0 2vw;
+      box-sizing:border-box;
+    }
+
     /* Egg Day glass */
     .egg-day-wrap{
-      position:absolute;
-      bottom: clamp(80px, 12vh, 160px); /* ยืดหยุ่นตามจอ */
-      width:100%;
       display:flex;
       justify-content:center;
-      pointer-events:none;
+      margin-bottom:0.5vh;
     }
     .egg-day{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 0.5em 1.2em;
-      font-size:clamp(14px, 2vw, 22px);
+      padding:0.4em 1em;
+      font-size:clamp(12px, 2vw, 20px);
       font-weight:700;
       color:#fff;
       border-radius:16px;
@@ -74,21 +81,23 @@
 
     /* โลโก้ล่าง */
     .logo-section{
-      height: clamp(60px, 15vh, 140px);
+      flex:1;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding: 0 clamp(10px, 3vw, 40px);
+      gap:2vw;
     }
     .logo-section img{
-      height: 70%;
-      object-fit: contain;
-      max-height:100px;
+      max-height:100%;
+      max-width:30%;
+      height:auto;
+      width:auto;
+      object-fit:contain;
     }
 
     /* Desktop layout */
     @media (min-width: 1024px){
-      .viewer-wrap{ max-width: 80%; }
+      .viewer-wrap{ max-width:80%; }
     }
   </style>
 </head>
@@ -107,18 +116,18 @@
         exposure="1"
         shadow-intensity="0.8"
       ></model-viewer>
+    </div>
 
-      <!-- Egg Day glass -->
+    <!-- กลุ่ม Egg Day + โลโก้ -->
+    <div class="bottom-group">
       <div class="egg-day-wrap">
         <div class="egg-day">Egg Day : 01</div>
       </div>
-    </div>
-
-    <!-- โลโก้ล่าง -->
-    <div class="logo-section">
-      <img src="/assets/logoimage1.png" alt="Logo Left">
-      <img src="/assets/imageevo01.png" alt="Evolution Image">
-      <img src="/assets/logoimage2.png" alt="Logo Right">
+      <div class="logo-section">
+        <img src="/assets/logoimage1.png" alt="Logo Left">
+        <img src="/assets/imageevo01.png" alt="Evolution Image">
+        <img src="/assets/logoimage2.png" alt="Logo Right">
+      </div>
     </div>
   </div>
 
