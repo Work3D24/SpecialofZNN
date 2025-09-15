@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>AR Egg Phase</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    :root{
+      --bg-top: #212121;
+      --bg-bottom: #f48fb1;
+      --glass-bg: rgba(255,255,255,0.12);
+      --glass-border: rgba(255,255,255,0.25);
+      --glass-blur: 10px;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI";
+      color:#fff;
+      background:linear-gradient(to bottom,var(--bg-top) 0%, var(--bg-top) 70%, var(--bg-bottom) 100%);
+    }
+
+    .page{
+      display:flex;
+      flex-direction:column;
+      height:100%;
+    }
+    .page.ar-active{ background:transparent; }
+
+    /* AR viewer */
+    .viewer-wrap{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    model-viewer{
+      width:100%;
+      height:100%;
+      min-height: 300px;
+      background:transparent;
+    }
+
+    /* Egg Day glass */
+    .egg-day-wrap{
+      position:absolute;
+      bottom: clamp(80px, 12vh, 160px); /* ยืดหยุ่นตามจอ */
+      width:100%;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .egg-day{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 0.5em 1.2em;
+      font-size:clamp(14px, 2vw, 22px);
+      font-weight:700;
+      color:#fff;
+      border-radius:16px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      white-space:nowrap;
+    }
+
+    /* โลโก้ล่าง */
+    .logo-section{
+      height: clamp(60px, 15vh, 140px);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding: 0 clamp(10px, 3vw, 40px);
+    }
+    .logo-section img{
+      height: 70%;
+      object-fit: contain;
+      max-height:100px;
+    }
+
+    /* Desktop layout */
+    @media (min-width: 1024px){
+      .viewer-wrap{ max-width: 80%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="page-root">
+    <div class="viewer-wrap" id="viewer-wrap">
+      <model-viewer id="mv"
+        src="/assets/model.glb"
+        ios-src="/assets/model.usdz"
+        alt="AR Egg Phase"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        environment-image="neutral"
+        camera-controls
+        autoplay
+        exposure="1"
+        shadow-intensity="0.8"
+      ></model-viewer>
+
+      <!-- Egg Day glass -->
+      <div class="egg-day-wrap">
+        <div class="egg-day">Egg Day : 01</div>
+      </div>
+    </div>
+
+    <!-- โลโก้ล่าง -->
+    <div class="logo-section">
+      <img src="/assets/logoimage1.png" alt="Logo Left">
+      <img src="/assets/imageevo01.png" alt="Evolution Image">
+      <img src="/assets/logoimage2.png" alt="Logo Right">
+    </div>
+  </div>
+
+  <script type="module">
+  import * as THREE from 'https://unpkg.com/three@0.164.0/build/three.module.js';
+  import { GLTFLoader } from 'https://unpkg.com/three@0.164.0/examples/jsm/loaders/GLTFLoader.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const mv = document.getElementById('mv');
+    const page = document.getElementById('page-root');
+
+    // ซ่อนพื้นหลัง gradient เมื่อเข้าสู่ AR
+    mv.addEventListener('ar-status', (evt) => {
+      const status = evt.detail?.status || '';
+      if(status.includes('session-started') || status.includes('presenting') || status.includes('in-ar')){
+        page.classList.add('ar-active');
+      }else{
+        page.classList.remove('ar-active');
+      }
+    });
+
+    // เล่นทุกอนิเมชันพร้อมกัน
+    async function tryPlayAllAnimations(){
+      try{
+        const loader = new GLTFLoader();
+        const gltf = await new Promise((res,rej)=> loader.load('/assets/model.glb', res, undefined, rej));
+        if(!gltf.animations || gltf.animations.length===0) return;
+        const internalModel = mv.scene;
+        if(!internalModel) return;
+        const mixer = new THREE.AnimationMixer(internalModel);
+        gltf.animations.forEach((clip)=>{
+          const action = mixer.clipAction(clip);
+          action.reset(); action.play(); action.setLoop(THREE.LoopRepeat, Infinity);
+        });
+        let prev = performance.now();
+        function tick(){
+          const now = performance.now();
+          const delta = (now-prev)/1000; prev=now;
+          mixer.update(delta);
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }catch(err){console.warn('Animation error', err)}
+    }
+    mv.addEventListener('load', ()=>{ tryPlayAllAnimations(); });
+  });
+  </script>
+</body>
+</html>
