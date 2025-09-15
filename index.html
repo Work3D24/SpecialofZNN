@@ -18,7 +18,7 @@
       font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI";
       color:#fff;
       background:linear-gradient(to bottom,var(--bg-top) 0%, var(--bg-top) 70%, var(--bg-bottom) 100%);
-      cursor: url("/assets/mouse.png"), auto; /* ใช้รูป .png เป็นเมาส์ */
+      cursor: url("/assets/mouse.png"), auto; /* Desktop cursor */
     }
 
     .page{
@@ -46,7 +46,7 @@
       background:transparent;
       shadow-intensity:1;
       shadow-softness:0.9;
-      cursor: url("/assets/mouse.png"), auto !important; /* cursor ในการ์ด */
+      cursor: url("/assets/mouse.png"), auto !important; /* Cursor บนการ์ด */
     }
 
     /* ==== Liquid Glass (Apple-like + shimmer) ==== */
@@ -163,6 +163,18 @@
       width:auto;
       object-fit:contain;
     }
+
+    /* Cursor ปลอมบนมือถือ */
+    .touch-cursor {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background: url("/assets/mouse.png") no-repeat center center / contain;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -200,6 +212,9 @@
     <div class="logo-right">
       <img src="/assets/logoimage2.png" alt="Logo Right">
     </div>
+
+    <!-- Cursor ปลอมบนมือถือ -->
+    <div class="touch-cursor" id="touchCursor"></div>
   </div>
 
   <script type="module">
@@ -243,6 +258,23 @@
       }catch(err){console.warn('Animation error', err)}
     }
     mv.addEventListener('load', ()=>{ tryPlayAllAnimations(); });
+
+    // Cursor ปลอมบนมือถือ
+    const cursorEl = document.getElementById("touchCursor");
+    document.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      cursorEl.style.left = touch.clientX + "px";
+      cursorEl.style.top = touch.clientY + "px";
+      cursorEl.style.display = "block";
+    });
+    document.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      cursorEl.style.left = touch.clientX + "px";
+      cursorEl.style.top = touch.clientY + "px";
+    });
+    document.addEventListener("touchend", () => {
+      cursorEl.style.display = "none";
+    });
   });
   </script>
 </body>
