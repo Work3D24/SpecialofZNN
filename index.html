@@ -182,8 +182,8 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model1.glb"
-        ios-src="/assets/model1.usdz"
+        src="/assets/model3.glb"
+        ios-src="/assets/model3.usdz"
         alt="AR Egg Phase"
         ar
         ar-modes="webxr scene-viewer quick-look"
@@ -199,7 +199,7 @@
     <!-- Egg Day + evo (liquid glass + shimmer) -->
     <div class="egg-day-wrap">
       <div class="glass">
-        <img class="evo" src="/assets/imageevo01.png" alt="Evolution">
+        <img class="evo" src="/assets/imageevo03.png" alt="Evolution">
         <span class="label">EGG DAY : 01</span>
         <span class="noise"></span>
       </div>
@@ -238,7 +238,7 @@
     async function tryPlayAllAnimations(){
       try{
         const loader = new GLTFLoader();
-        const gltf = await new Promise((res,rej)=> loader.load('/assets/model1.glb', res, undefined, rej));
+        const gltf = await new Promise((res,rej)=> loader.load('/assets/model3.glb', res, undefined, rej));
         if(!gltf.animations || gltf.animations.length===0) return;
         const internalModel = mv.scene;
         if(!internalModel) return;
