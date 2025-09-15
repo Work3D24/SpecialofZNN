@@ -45,52 +45,52 @@
       height:100%;
       min-height: 300px;
       background:transparent;
+      /* คืนค่าเงาใต้โมเดล */
+      shadow-intensity: 1;
+      shadow-softness: 0.9;
     }
 
-    /* กลุ่ม Egg Day + โลโก้ล่าง */
-    .bottom-group{
-      height:15vh; /* ทั้งกลุ่มสูงไม่เกิน 15% ของจอ */
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      padding:0 2vw;
-      box-sizing:border-box;
-    }
-
-    /* Egg Day glass */
+    /* Egg Day + evo */
     .egg-day-wrap{
+      position:absolute;
+      bottom: 10vh; /* ยกขึ้นจากโลโก้ล่าง */
+      width:100%;
       display:flex;
       justify-content:center;
-      margin-bottom:0.5vh;
     }
-    .egg-day{
-      display:inline-flex;
+    .egg-day-group{
+      display:flex;
       align-items:center;
-      justify-content:center;
+      gap:0.6em;
       padding:0.4em 1em;
-      font-size:clamp(12px, 2vw, 20px);
-      font-weight:700;
-      color:#fff;
       border-radius:16px;
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(var(--glass-blur));
       -webkit-backdrop-filter: blur(var(--glass-blur));
+    }
+    .egg-day-group img{
+      height:1.2em; /* สูงเท่าข้อความ */
+      object-fit:contain;
+    }
+    .egg-day{
+      font-size:clamp(14px, 2vw, 20px);
+      font-weight:700;
+      color:#fff;
       white-space:nowrap;
     }
 
-    /* โลโก้ล่าง */
-    .logo-section{
-      flex:1;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:2vw;
+    /* โลโก้ซ้าย-ขวาล่าง */
+    .logo-left,
+    .logo-right{
+      position:fixed;
+      bottom:1vh;
     }
-    .logo-section img{
-      max-height:100%;
-      max-width:30%;
-      height:auto;
+    .logo-left{ left:1vw; }
+    .logo-right{ right:1vw; }
+    .logo-left img,
+    .logo-right img{
+      height:3vh; /* 3% ของความสูงจอ */
       width:auto;
       object-fit:contain;
     }
@@ -114,20 +114,25 @@
         camera-controls
         autoplay
         exposure="1"
-        shadow-intensity="0.8"
+        shadow-intensity="1"
+        shadow-softness="0.9"
       ></model-viewer>
+
+      <!-- Egg Day + evo -->
+      <div class="egg-day-wrap">
+        <div class="egg-day-group">
+          <img src="/assets/imageevo01.png" alt="Evolution">
+          <div class="egg-day">Egg Day : 01</div>
+        </div>
+      </div>
     </div>
 
-    <!-- กลุ่ม Egg Day + โลโก้ -->
-    <div class="bottom-group">
-      <div class="egg-day-wrap">
-        <div class="egg-day">Egg Day : 01</div>
-      </div>
-      <div class="logo-section">
-        <img src="/assets/logoimage1.png" alt="Logo Left">
-        <img src="/assets/imageevo01.png" alt="Evolution Image">
-        <img src="/assets/logoimage2.png" alt="Logo Right">
-      </div>
+    <!-- โลโก้ซ้าย/ขวา -->
+    <div class="logo-left">
+      <img src="/assets/logoimage1.png" alt="Logo Left">
+    </div>
+    <div class="logo-right">
+      <img src="/assets/logoimage2.png" alt="Logo Right">
     </div>
   </div>
 
