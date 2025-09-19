@@ -4,6 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Special of ZNN</title>
+
+  <!-- Metadata สำหรับ Social Share -->
+  <meta property="og:title" content="Special of ZNN" />
+  <meta property="og:description" content="Hi Granny, sis and bro, please bring me up and play with me!" />
+  <meta property="og:url" content="https://specialofznn.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <!-- ไม่ใส่ og:image → จะไม่มีรูปตอนแชร์ -->
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Special of ZNN" />
+  <meta name="twitter:description" content="Hi Granny, sis and bro, please bring me up and play with me!" />
+
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     :root{
@@ -11,23 +24,15 @@
       --bg-bottom: #f48fb1;
       --card-shadow: 0 10px 30px rgba(0,0,0,0.45);
     }
-
     html,body{
       height:100%;
       margin:0;
       font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI";
       color:#fff;
       background:linear-gradient(to bottom,var(--bg-top) 0%, var(--bg-top) 70%, var(--bg-bottom) 100%);
-      cursor: url("/assets/mouse.png"), auto; /* Desktop cursor */
+      cursor: url("/assets/mouse.png"), auto;
     }
-
-    .page{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      height:100%;
-    }
+    .page{ display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
     .page.ar-active{ background:transparent; }
 
     /* กล่องโมเดล */
@@ -46,10 +51,11 @@
       background:transparent;
       shadow-intensity:1;
       shadow-softness:0.9;
-      cursor: url("/assets/mouse.png"), auto !important; /* Cursor บนการ์ด */
+      cursor: url("/assets/mouse.png"), auto !important;
     }
 
-    /* ==== Liquid Glass (Apple-like + shimmer) ==== */
+    /* Egg Day */
+    .egg-day-wrap{ margin-top: 3vh; display:flex; justify-content:center; width:100%; }
     .glass {
       position: relative;
       display: inline-flex;
@@ -57,123 +63,81 @@
       gap: .55em;
       padding: .5em 1.1em;
       border-radius: 16px;
-
-      background: linear-gradient(180deg,
-                  rgba(255,255,255,.22) 0%,
-                  rgba(255,255,255,.10) 60%,
-                  rgba(255,255,255,.06) 100%);
-      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.12);
       backdrop-filter: blur(14px) saturate(120%);
       -webkit-backdrop-filter: blur(14px) saturate(120%);
-
-      box-shadow:
-        0 8px 24px rgba(0,0,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.28),
-        inset 0 -1px 0 rgba(255,255,255,.08);
-
-      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
     }
+    .glass .label{ font-weight:700; font-size: clamp(14px, 2vw, 20px); color:#fff; white-space: nowrap; }
+    .glass .evo{ height: 1.2em; width: auto; object-fit: contain; }
 
-    .glass::before{
-      content:"";
-      position:absolute; inset:0;
-      border-radius: inherit;
-      pointer-events:none;
-      background:
-        linear-gradient( to bottom,
-          rgba(255,255,255,.35),
-          rgba(255,255,255,0) 55%) top/100% 40% no-repeat,
-        radial-gradient(120% 100% at 0% 0%,
-          rgba(255,255,255,.35), rgba(255,255,255,0) 60%) left/55% 100% no-repeat,
-        radial-gradient(120% 100% at 100% 0%,
-          rgba(255,255,255,.35), rgba(255,255,255,0) 60%) right/55% 100% no-repeat;
-      mix-blend-mode: screen;
-      opacity:.65;
-    }
-
-    .glass::after{
-      content:"";
-      position:absolute; inset:0;
-      border-radius: inherit;
-      background: linear-gradient(120deg,
-        transparent 0%,
-        rgba(255,255,255,.7) 45%,
-        rgba(255,255,255,.9) 50%,
-        rgba(255,255,255,.7) 55%,
-        transparent 100%);
-      transform: translateX(-100%);
-      animation: shimmer 3.5s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      50% { transform: translateX(100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .glass > .noise {
-      position:absolute; inset:0; pointer-events:none; border-radius:inherit;
-      opacity:.08; mix-blend-mode:soft-light;
-      background-image: url("data:image/svg+xml;utf8,\
-      <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'>\
-        <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter>\
-        <rect width='100' height='100' filter='url(%23n)' opacity='0.6'/>\
-      </svg>");
-    }
-
-    .glass .label{
-      font-weight:700;
-      font-size: clamp(14px, 2vw, 20px);
-      color:#fff;
-      white-space: nowrap;
-    }
-    .glass .evo{
-      height: 1.2em;
-      width: auto;
-      object-fit: contain;
-    }
-
-    @media (prefers-reduced-transparency: reduce){
-      .glass{
-        background: rgba(255,255,255,.12);
-        backdrop-filter: none; -webkit-backdrop-filter: none;
-      }
-      .glass::before,.glass::after,.glass>.noise{ display:none; }
-    }
-
-    /* Egg Day อยู่ใต้การ์ด (เว้นห่าง 3vh) */
-    .egg-day-wrap{
-      margin-top: 3vh;
-      display:flex;
-      justify-content:center;
-      width:100%;
-    }
-
-    /* โลโก้ซ้าย-ขวาล่าง */
-    .logo-left,
-    .logo-right{
-      position:fixed;
-      bottom:1vh;
-    }
+    /* โลโก้ */
+    .logo-left, .logo-right{ position:fixed; bottom:1vh; }
     .logo-left{ left:1vw; }
     .logo-right{ right:1vw; }
-    .logo-left img,
-    .logo-right img{
-      height:3vh;
-      width:auto;
-      object-fit:contain;
-    }
+    .logo-left img, .logo-right img{ height:3vh; width:auto; object-fit:contain; }
 
-    /* Cursor ปลอมบนมือถือ */
-    .touch-cursor {
+    /* Popup */
+    .popup-overlay {
       position: fixed;
-      width: 40px;
-      height: 40px;
-      background: url("/assets/mouse.png") no-repeat center center / contain;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      display: none;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+    .popup-box {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(30,30,30,0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .popup-box img {
+      max-height: 60vh;
+      width: auto;
+      border-radius: 12px;
+    }
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .lang-switch button {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .lang-switch button.active { background: #ff8a80; color: #fff; }
+    .popup-footer {
+      margin-top: 8px;
+      color: #fff;
+      font-size: 14px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
     }
   </style>
 </head>
@@ -182,99 +146,108 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model1.glb"
-        ios-src="/assets/model1.usdz"
+        src="/assets/model4.glb"
+        ios-src="/assets/model4.usdz"
         alt="Special of ZNN"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
+        ar ar-modes="webxr scene-viewer quick-look"
         environment-image="neutral"
-        camera-controls
-        autoplay
+        camera-controls autoplay
         exposure="1"
         shadow-intensity="1"
-        shadow-softness="0.9"
-      ></model-viewer>
+        shadow-softness="0.9">
+      </model-viewer>
     </div>
 
-    <!-- Egg Day + evo (liquid glass + shimmer) -->
+    <!-- Egg Day -->
     <div class="egg-day-wrap">
       <div class="glass">
-        <img class="evo" src="/assets/imageevo01.png" alt="Evolution">
-        <span class="label">EGG DAY : 03</span>
-        <span class="noise"></span>
+        <img class="evo" src="/assets/imageevo02.png" alt="Evolution">
+        <span class="label">BABY DAY : 01</span>
       </div>
     </div>
 
-    <!-- โลโก้ซ้าย/ขวาล่าง -->
-    <div class="logo-left">
-      <img src="/assets/logoimage1.png" alt="Logo Left">
-    </div>
-    <div class="logo-right">
-      <img src="/assets/logoimage2.png" alt="Logo Right">
-    </div>
-
-    <!-- Cursor ปลอมบนมือถือ -->
-    <div class="touch-cursor" id="touchCursor"></div>
+    <!-- โลโก้ -->
+    <div class="logo-left"><img src="/assets/logoimage1.png" alt="Logo Left"></div>
+    <div class="logo-right"><img src="/assets/logoimage2.png" alt="Logo Right"></div>
   </div>
 
-  <script type="module">
-  import * as THREE from 'https://unpkg.com/three@0.164.0/build/three.module.js';
-  import { GLTFLoader } from 'https://unpkg.com/three@0.164.0/examples/jsm/loaders/GLTFLoader.js';
+  <!-- Popup -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+      <div class="lang-switch">
+        <button id="btnTH" class="active">TH</button>
+        <button id="btnEN">EN</button>
+      </div>
+      <button class="popup-close" id="popupClose">×</button>
+      <img id="letterImage" src="/assets/letter_v1_th.jpg" alt="Letter">
+      <div class="popup-footer">
+        <div id="countdown">Auto close in 120s</div>
+        <label><input type="checkbox" id="dontShow"> Do not show again</label>
+      </div>
+    </div>
+  </div>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const mv = document.getElementById('mv');
-    const page = document.getElementById('page-root');
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Popup script loaded");
 
-    mv.addEventListener('ar-status', (evt) => {
-      const status = evt.detail?.status || '';
-      if(status.includes('session-started') || status.includes('presenting') || status.includes('in-ar')){
-        page.classList.add('ar-active');
-      }else{
-        page.classList.remove('ar-active');
-      }
-    });
+    const popup = document.getElementById('popupOverlay');
+    const btnClose = document.getElementById('popupClose');
+    const btnTH = document.getElementById('btnTH');
+    const btnEN = document.getElementById('btnEN');
+    const letterImage = document.getElementById('letterImage');
+    const countdownEl = document.getElementById('countdown');
+    const dontShow = document.getElementById('dontShow');
 
-    // เล่นทุกอนิเมชันพร้อมกัน
-    async function tryPlayAllAnimations(){
-      try{
-        const loader = new GLTFLoader();
-        const gltf = await new Promise((res,rej)=> loader.load('/assets/model1.glb', res, undefined, rej));
-        if(!gltf.animations || gltf.animations.length===0) return;
-        const internalModel = mv.scene;
-        if(!internalModel) return;
-        const mixer = new THREE.AnimationMixer(internalModel);
-        gltf.animations.forEach((clip)=>{
-          const action = mixer.clipAction(clip);
-          action.reset(); action.play(); action.setLoop(THREE.LoopRepeat, Infinity);
-        });
-        let prev = performance.now();
-        function tick(){
-          const now = performance.now();
-          const delta = (now-prev)/1000; prev=now;
-          mixer.update(delta);
-          requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      }catch(err){console.warn('Animation error', err)}
+    const skipKey = "skipPopup";
+    let currentLang = "th";
+    let version = "v1"; // v2, v3, v4
+
+    // โหลดสถานะ "do not show again"
+    if (localStorage.getItem(skipKey) === "true") {
+      popup.style.display = "none";
+      return; // ไม่ต้องทำงานต่อ
     }
-    mv.addEventListener('load', ()=>{ tryPlayAllAnimations(); });
 
-    // Cursor ปลอมบนมือถือ
-    const cursorEl = document.getElementById("touchCursor");
-    document.addEventListener("touchstart", (e) => {
-      const touch = e.touches[0];
-      cursorEl.style.left = touch.clientX + "px";
-      cursorEl.style.top = touch.clientY + "px";
-      cursorEl.style.display = "block";
+    // ปุ่มปิด
+    btnClose.addEventListener("click", () => {
+      console.log("❌ Close clicked");
+      if (dontShow.checked) {
+        localStorage.setItem(skipKey, "true");
+      }
+      popup.style.display = "none";
     });
-    document.addEventListener("touchmove", (e) => {
-      const touch = e.touches[0];
-      cursorEl.style.left = touch.clientX + "px";
-      cursorEl.style.top = touch.clientY + "px";
+
+    // ปุ่มภาษา
+    btnTH.addEventListener("click", () => {
+      console.log("🇹🇭 TH clicked");
+      currentLang = "th";
+      btnTH.classList.add("active");
+      btnEN.classList.remove("active");
+      letterImage.src = `/assets/letter_${version}_th.jpg`;
     });
-    document.addEventListener("touchend", () => {
-      cursorEl.style.display = "none";
+    btnEN.addEventListener("click", () => {
+      console.log("🇺🇸 EN clicked");
+      currentLang = "en";
+      btnEN.classList.add("active");
+      btnTH.classList.remove("active");
+      letterImage.src = `/assets/letter_${version}_en.jpg`;
     });
+
+    // นับถอยหลัง
+    let timer = 120;
+    const interval = setInterval(() => {
+      timer--;
+      countdownEl.textContent = `Auto close in ${timer}s`;
+      if (timer <= 0) {
+        console.log("⏰ Auto closed");
+        if (dontShow.checked) {
+          localStorage.setItem(skipKey, "true");
+        }
+        popup.style.display = "none";
+        clearInterval(interval);
+      }
+    }, 1000);
   });
   </script>
 </body>
