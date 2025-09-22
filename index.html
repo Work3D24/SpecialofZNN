@@ -146,8 +146,8 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model4.glb"
-        ios-src="/assets/model4.usdz"
+        src="/assets/model3.glb"
+        ios-src="/assets/model3.usdz"
         alt="Special of ZNN"
         ar ar-modes="webxr scene-viewer quick-look"
         environment-image="neutral"
@@ -161,8 +161,8 @@
     <!-- Egg Day -->
     <div class="egg-day-wrap">
       <div class="glass">
-        <img class="evo" src="/assets/imageevo02.png" alt="Evolution">
-        <span class="label">BABY DAY : 03</span>
+        <img class="evo" src="/assets/imageevo03.png" alt="Evolution">
+        <span class="label"> NONGZON </span>
       </div>
     </div>
 
@@ -179,7 +179,7 @@
         <button id="btnEN">EN</button>
       </div>
       <button class="popup-close" id="popupClose">×</button>
-      <img id="letterImage" src="/assets/letter_v1_th.jpg" alt="Letter">
+      <img id="letterImage" src="/assets/letter_v2_th.jpg" alt="Letter">
       <div class="popup-footer">
         <div id="countdown">Auto close in 120s</div>
         <label><input type="checkbox" id="dontShow"> Do not show again</label>
@@ -199,9 +199,9 @@
     const countdownEl = document.getElementById('countdown');
     const dontShow = document.getElementById('dontShow');
 
-    const skipKey = "skipPopup";
     let currentLang = "th";
-    let version = "v1"; // v2, v3, v4
+    let version = "v2"; // 🔧 เปลี่ยนเลขตรงนี้เวลาอัปเดตเป็น v3, v4
+    const skipKey = `skipPopup_${version}`;
 
     // โหลดสถานะ "do not show again"
     if (localStorage.getItem(skipKey) === "true") {
@@ -220,14 +220,12 @@
 
     // ปุ่มภาษา
     btnTH.addEventListener("click", () => {
-      console.log("🇹🇭 TH clicked");
       currentLang = "th";
       btnTH.classList.add("active");
       btnEN.classList.remove("active");
       letterImage.src = `/assets/letter_${version}_th.jpg`;
     });
     btnEN.addEventListener("click", () => {
-      console.log("🇺🇸 EN clicked");
       currentLang = "en";
       btnEN.classList.add("active");
       btnTH.classList.remove("active");
@@ -240,7 +238,6 @@
       timer--;
       countdownEl.textContent = `Auto close in ${timer}s`;
       if (timer <= 0) {
-        console.log("⏰ Auto closed");
         if (dontShow.checked) {
           localStorage.setItem(skipKey, "true");
         }
