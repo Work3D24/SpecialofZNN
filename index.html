@@ -146,8 +146,8 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model3.glb"
-        ios-src="/assets/model3.usdz"
+        src="/assets/model5.glb"
+        ios-src="/assets/model5.usdz"
         alt="Special of ZNN"
         ar ar-modes="webxr scene-viewer quick-look"
         environment-image="neutral"
@@ -179,7 +179,7 @@
         <button id="btnEN">EN</button>
       </div>
       <button class="popup-close" id="popupClose">×</button>
-      <img id="letterImage" src="/assets/letter_v2_th.jpg" alt="Letter">
+      <img id="letterImage" src="/assets/letter_v3_th.jpg" alt="Letter">
       <div class="popup-footer">
         <div id="countdown">Auto close in 120s</div>
         <label><input type="checkbox" id="dontShow"> Do not show again</label>
@@ -200,7 +200,7 @@
     const dontShow = document.getElementById('dontShow');
 
     let currentLang = "th";
-    let version = "v2"; // 🔧 เปลี่ยนเลขตรงนี้เวลาอัปเดตเป็น v3, v4
+    let version = "v3"; // 🔧 เปลี่ยนเลขตรงนี้เวลาอัปเดตเป็น v3, v4
     const skipKey = `skipPopup_${version}`;
 
     // โหลดสถานะ "do not show again"
