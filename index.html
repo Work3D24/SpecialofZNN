@@ -10,7 +10,6 @@
   <meta property="og:description" content="Hi Granny, sis and bro, please bring me up and play with me!" />
   <meta property="og:url" content="https://specialofznn.vercel.app/" />
   <meta property="og:type" content="website" />
-  <!-- ไม่ใส่ og:image → จะไม่มีรูปตอนแชร์ -->
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
@@ -77,67 +76,9 @@
     .logo-right{ right:1vw; }
     .logo-left img, .logo-right img{ height:3vh; width:auto; object-fit:contain; }
 
-    /* Popup */
+    /* Popup (ยังคง style ไว้ แต่จะไม่แสดง) */
     .popup-overlay {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.7);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index:1000;
-    }
-    .popup-box {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 16px;
-      padding: 16px;
-      background: rgba(30,30,30,0.9);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .popup-box img {
-      max-height: 60vh;
-      width: auto;
-      border-radius: 12px;
-    }
-    .popup-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #333;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .lang-switch {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .lang-switch button {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .lang-switch button.active { background: #ff8a80; color: #fff; }
-    .popup-footer {
-      margin-top: 8px;
-      color: #fff;
-      font-size: 14px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
+      display: none !important;
     }
   </style>
 </head>
@@ -146,8 +87,8 @@
     <!-- กล่องโมเดล -->
     <div class="viewer-card">
       <model-viewer id="mv"
-        src="/assets/model5.glb"
-        ios-src="/assets/model5.usdz"
+        src="/assets/model6.glb"
+        ios-src="/assets/model6.usdz"
         alt="Special of ZNN"
         ar ar-modes="webxr scene-viewer quick-look"
         environment-image="neutral"
@@ -171,80 +112,15 @@
     <div class="logo-right"><img src="/assets/logoimage2.png" alt="Logo Right"></div>
   </div>
 
-  <!-- Popup -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup-box">
-      <div class="lang-switch">
-        <button id="btnTH" class="active">TH</button>
-        <button id="btnEN">EN</button>
-      </div>
-      <button class="popup-close" id="popupClose">×</button>
-      <img id="letterImage" src="/assets/letter_v3_th.jpg" alt="Letter">
-      <div class="popup-footer">
-        <div id="countdown">Auto close in 120s</div>
-        <label><input type="checkbox" id="dontShow"> Do not show again</label>
-      </div>
-    </div>
-  </div>
+  <!-- Popup (ซ่อนไว้ ไม่ทำงาน) -->
+  <div class="popup-overlay" id="popupOverlay" style="display:none;"></div>
 
   <script>
+  // ปิดการทำงาน popup ทั้งหมด
   document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Popup script loaded");
-
     const popup = document.getElementById('popupOverlay');
-    const btnClose = document.getElementById('popupClose');
-    const btnTH = document.getElementById('btnTH');
-    const btnEN = document.getElementById('btnEN');
-    const letterImage = document.getElementById('letterImage');
-    const countdownEl = document.getElementById('countdown');
-    const dontShow = document.getElementById('dontShow');
-
-    let currentLang = "th";
-    let version = "v3"; // 🔧 เปลี่ยนเลขตรงนี้เวลาอัปเดตเป็น v3, v4
-    const skipKey = `skipPopup_${version}`;
-
-    // โหลดสถานะ "do not show again"
-    if (localStorage.getItem(skipKey) === "true") {
-      popup.style.display = "none";
-      return; // ไม่ต้องทำงานต่อ
-    }
-
-    // ปุ่มปิด
-    btnClose.addEventListener("click", () => {
-      console.log("❌ Close clicked");
-      if (dontShow.checked) {
-        localStorage.setItem(skipKey, "true");
-      }
-      popup.style.display = "none";
-    });
-
-    // ปุ่มภาษา
-    btnTH.addEventListener("click", () => {
-      currentLang = "th";
-      btnTH.classList.add("active");
-      btnEN.classList.remove("active");
-      letterImage.src = `/assets/letter_${version}_th.jpg`;
-    });
-    btnEN.addEventListener("click", () => {
-      currentLang = "en";
-      btnEN.classList.add("active");
-      btnTH.classList.remove("active");
-      letterImage.src = `/assets/letter_${version}_en.jpg`;
-    });
-
-    // นับถอยหลัง
-    let timer = 120;
-    const interval = setInterval(() => {
-      timer--;
-      countdownEl.textContent = `Auto close in ${timer}s`;
-      if (timer <= 0) {
-        if (dontShow.checked) {
-          localStorage.setItem(skipKey, "true");
-        }
-        popup.style.display = "none";
-        clearInterval(interval);
-      }
-    }, 1000);
+    if (popup) popup.style.display = "none";
+    console.log("✅ Popup system disabled");
   });
   </script>
 </body>
